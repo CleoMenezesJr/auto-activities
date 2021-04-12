@@ -1,0 +1,9 @@
+{
+  "name": "Auto Activities",
+  "description": "Show activities overlay when there are no windows.",
+  "uuid": "auto-activities@acedron.github.io",
+  "shell-version": [ "40" ],
+  "url": "https://github.com/acedron/auto-activities",
+  "original-authors": [ "Akın Oktay ATALAY" ],
+  "version": "1"
+}
