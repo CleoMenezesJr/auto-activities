@@ -18,7 +18,6 @@
 'use strict';
 
 const Main = imports.ui.main;
-const Workspace = imports.ui.workspace;
 const { GObject, St } = imports.gi;
 
 var AutoActivities = GObject.registerClass(
@@ -33,34 +32,39 @@ var AutoActivities = GObject.registerClass(
     }
   
     enable() {
-      let workspaceManager = global.workspace_manager;
-      this.workspace = workspaceManager.get_active_workspace();
-      this.workspace.connect('window-removed', this._windowRemoved.bind(this));
-      this._workspacesReorderedEvent = workspaceManager.connect('workspaces-reordered', this._workspacesUpdated.bind(this));
-      this._workspacesUpdatedEvent = workspaceManager.connect('notify::n-workspaces', this._workspacesUpdated.bind(this));
+      for (let i = 0; i < global.workspace_manager.n_workspaces; i++) {
+        try { global.workspace_manager.get_workspace_by_index(i).connect('window-removed', this._windowRemoved.bind(this)); }
+        catch (_err) {}
+      }
+      this._workspacesReorderedEvent = global.workspace_manager.connect('workspaces-reordered', this._workspacesUpdated.bind(this));
+      this._workspacesUpdatedEvent = global.workspace_manager.connect('notify::n-workspaces', this._workspacesUpdated.bind(this));
     }
   
     _workspacesUpdated() {
-      let workspaceManager = global.workspace_manager;
-      this.workspace.disconnect(this._windowRemovedEvent);
-      this.workspace = workspaceManager.get_active_workspace();
-      this.workspace.connect('window-removed', this._windowRemoved.bind(this));
+      for (let i = 0; i < global.workspace_manager.n_workspaces; i++) {
+        try { global.workspace_manager.get_workspace_by_index(i).disconnect(this._windowRemovedEvent); }
+        catch (_err) {}
+      }
+      for (let i = 0; i < global.workspace_manager.n_workspaces; i++) {
+        try { global.workspace_manager.get_workspace_by_index(i).connect('window-removed', this._windowRemoved.bind(this)); }
+        catch (_err) {}
+      }
     }
   
     _windowRemoved() {
-      const globalWindows = global.get_window_actors();
       let windows = global.get_window_actors();
-      windows = windows.filter(window => window.meta_window.get_workspace().index() === this.workspace.index());
+      windows = windows.filter(window => window.meta_window.get_workspace().index() === global.workspace_manager.get_active_workspace().index());
   
       if (windows.length <= 1) Main.overview.show();
     }
   
     destroy() {
-      let workspaceManager = global.workspace_manager;
-      workspaceManager.disconnect(this._workspacesReorderedEvent);
-      workspaceManager.disconnect(this._workspacesUpdatedEvent);
+      global.workspace_manager.disconnect(this._workspacesReorderedEvent);
+      global.workspace_manager.disconnect(this._workspacesUpdatedEvent);
   
-      try { this.workspace.disconnect(this._windowRemovedEvent); }
-      catch (_err) {}
+      for (let i = 0; i < global.workspace_manager.n_workspaces; i++) {
+        try { global.workspace_manager.get_workspace_by_index(i).disconnect(this._windowRemovedEvent); }
+        catch (_err) {}
+      }
     }
   });
