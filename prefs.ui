@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.38.2 -->
+<interface domain="auto-activities">
+  <requires lib="gtk+" version="3.14"/>
+  <object class="GtkBox" id="MainWidget">
+    <property name="can-focus">False</property>
+    <property name="halign">center</property>
+    <property name="valign">start</property>
+    <property name="margin-top">32</property>
+    <property name="orientation">vertical</property>
+    <child>
+      <!-- n-columns=2 n-rows=1 -->
+      <object class="GtkGrid" id="IsolateWorkspacesGrid">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="margin-bottom">8</property>
+        <child>
+          <object class="GtkLabel" id="IsolateWorkspacesLabel">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-end">16</property>
+            <property name="label" translatable="yes">Isolate Workspaces</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="IsolateWorkspacesSwitch">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <!-- n-columns=2 n-rows=1 -->
+      <object class="GtkGrid" id="IsolateMonitorsGrid">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="halign">end</property>
+        <property name="margin-bottom">8</property>
+        <child>
+          <object class="GtkLabel" id="IsolateMonitorsLabel">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-end">16</property>
+            <property name="label" translatable="yes">Isolate Monitors</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="IsolateMonitorsSwitch">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="valign">end</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

@@ -5,5 +5,6 @@
   "shell-version": [ "40" ],
   "url": "https://github.com/acedron/auto-activities",
   "original-authors": [ "Akın Oktay ATALAY" ],
-  "version": "3"
+  "version": "4",
+  "gettext-domain": "auto-activities"
 }

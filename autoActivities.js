@@ -20,10 +20,9 @@
 const Main = imports.ui.main;
 const { GObject, St } = imports.gi;
 
-var AutoActivities = GObject.registerClass(
+const AutoActivities = GObject.registerClass(
   class AutoActivities extends St.Bin {
     _init(remoteModel, monitorIndex) {
-      this.workspace = null;
       this._workspacesReorderedEvent = null;
       this._workspacesUpdatedEvent = null;
       this._windowRemovedEvent = null;
