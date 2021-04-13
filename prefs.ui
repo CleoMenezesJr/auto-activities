@@ -13,6 +13,7 @@
       <object class="GtkGrid" id="IsolateWorkspacesGrid">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
+        <property name="halign">end</property>
         <property name="margin-bottom">8</property>
         <child>
           <object class="GtkLabel" id="IsolateWorkspacesLabel">
@@ -26,6 +27,7 @@
           <object class="GtkSwitch" id="IsolateWorkspacesSwitch">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
+            <property name="valign">end</property>
           </object>
         </child>
       </object>
@@ -47,6 +49,30 @@
         </child>
         <child>
           <object class="GtkSwitch" id="IsolateMonitorsSwitch">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="valign">end</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <!-- n-columns=2 n-rows=1 -->
+      <object class="GtkGrid" id="SkipTaskbarGrid">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="halign">end</property>
+        <property name="margin-bottom">8</property>
+        <child>
+          <object class="GtkLabel" id="SkipTaskbarLabel">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-end">16</property>
+            <property name="label" translatable="yes">Ignore Taskbar Windows</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="SkipTaskbarSwitch">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="valign">end</property>

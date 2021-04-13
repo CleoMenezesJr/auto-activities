@@ -19,8 +19,10 @@
 
 const Main = imports.ui.main;
 const { GObject, St } = imports.gi;
+const ExtensionUtils = imports.misc.extensionUtils;
+const Me = ExtensionUtils.getCurrentExtension();
 
-const AutoActivities = GObject.registerClass(
+var AutoActivities = GObject.registerClass(
   class AutoActivities extends St.Bin {
     _init(remoteModel, monitorIndex) {
       this._workspacesReorderedEvent = null;
@@ -28,6 +30,7 @@ const AutoActivities = GObject.registerClass(
       this._windowRemovedEvent = null;
       this.remoteModel = remoteModel;
       this.monitorIndex = monitorIndex;
+      this.settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.auto-activities');
     }
   
     enable() {
@@ -52,8 +55,9 @@ const AutoActivities = GObject.registerClass(
   
     _windowRemoved() {
       let windows = global.get_window_actors();
-      windows = windows.filter(window => window.meta_window.get_workspace().index() === global.workspace_manager.get_active_workspace().index());
-      windows = windows.filter(window => !window.meta_window.skip_taskbar);
+      if (this.settings.get_boolean('isolate-workspaces')) windows = windows.filter(window => window.meta_window.get_workspace().index() === global.workspace_manager.get_active_workspace().index());
+      if (this.settings.get_boolean('isolate-monitors')) windows = windows.filter(window => window.meta_window.get_monitor() === this.monitorIndex);
+      if (this.settings.get_boolean('skip-taskbar')) windows = windows.filter(window => !window.meta_window.skip_taskbar);
 
       if (windows.length < 1) Main.overview.show();
     }

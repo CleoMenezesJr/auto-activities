@@ -50,5 +50,9 @@ function buildPrefsWidget() {
   isolateMonitors.set_active(settings.get_boolean('isolate-monitors'));
   settings.bind('isolate-monitors', isolateMonitors, 'active', Gio.SettingsBindFlags.DEFAULT);
 
+  let skipTaskbar = builder.get_object('SkipTaskbarSwitch');
+  skipTaskbar.set_active(settings.get_boolean('skip-taskbar'));
+  settings.bind('skip-taskbar', skipTaskbar, 'active', Gio.SettingsBindFlags.DEFAULT);
+
   return builder.get_object('MainWidget');
 }
