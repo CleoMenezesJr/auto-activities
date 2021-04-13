@@ -2,9 +2,9 @@
   "name": "Auto Activities",
   "description": "Show activities overlay when there are no windows.",
   "uuid": "auto-activities@acedron.github.io",
-  "shell-version": [ "40.0" ],
+  "shell-version": [ "40" ],
   "url": "https://github.com/acedron/auto-activities",
-  "original-authors": [ "Akın Oktay ATALAY" ],
-  "version": "4",
+  "original-author": "acedrons@yahoo.co.jp",
+  "version": 4,
   "gettext-domain": "auto-activities"
 }
