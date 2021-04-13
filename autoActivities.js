@@ -54,8 +54,9 @@ var AutoActivities = GObject.registerClass(
     _windowRemoved() {
       let windows = global.get_window_actors();
       windows = windows.filter(window => window.meta_window.get_workspace().index() === global.workspace_manager.get_active_workspace().index());
-  
-      if (windows.length <= 1) Main.overview.show();
+      windows = windows.filter(window => !window.meta_window.skip_taskbar);
+
+      if (windows.length < 1) Main.overview.show();
     }
   
     destroy() {
