@@ -18,7 +18,7 @@
 'use strict';
 
 const Main = imports.ui.main;
-const { GObject, St } = imports.gi;
+const { GObject, St, Meta } = imports.gi;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 
@@ -42,7 +42,7 @@ var AutoActivities = GObject.registerClass(
       this._workspacesUpdatedEvent = global.workspace_manager.connect('notify::n-workspaces', this._workspacesUpdated.bind(this));
     }
   
-    _workspacesUpdated() {
+    _workspacesUpdated(_workspaceManager) {
       for (let i = 0; i < global.workspace_manager.n_workspaces; i++) {
         try { global.workspace_manager.get_workspace_by_index(i).disconnect(this._windowRemovedEvent); }
         catch (_err) {}
@@ -52,8 +52,11 @@ var AutoActivities = GObject.registerClass(
         catch (_err) {}
       }
     }
-  
-    _windowRemoved() {
+
+    _windowRemoved(_workspace, removedWindow) {
+      let ignoredWindowTypes = [ Meta.WindowType.DROPDOWN_MENU, Meta.WindowType.NOTIFICATION, Meta.WindowType.POPUP_MENU ];
+      if (ignoredWindowTypes.includes(removedWindow.get_window_type())) return;
+
       let windows = global.get_window_actors();
       if (this.settings.get_boolean('isolate-workspaces')) windows = windows.filter(window => window.meta_window.get_workspace().index() === global.workspace_manager.get_active_workspace().index());
       if (this.settings.get_boolean('isolate-monitors')) windows = windows.filter(window => window.meta_window.get_monitor() === this.monitorIndex);
