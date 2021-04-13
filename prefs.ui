@@ -5,8 +5,12 @@
   <object class="GtkBox" id="MainWidget">
     <property name="can-focus">False</property>
     <property name="halign">center</property>
-    <property name="valign">start</property>
-    <property name="margin-top">32</property>
+    <property name="margin-start">8</property>
+    <property name="margin-end">8</property>
+    <property name="margin-top">8</property>
+    <property name="margin-bottom">8</property>
+    <property name="hexpand">True</property>
+    <property name="vexpand">True</property>
     <property name="orientation">vertical</property>
     <child>
       <!-- n-columns=2 n-rows=1 -->
@@ -14,6 +18,7 @@
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="halign">end</property>
+        <property name="margin-top">48</property>
         <property name="margin-bottom">8</property>
         <child>
           <object class="GtkLabel" id="IsolateWorkspacesLabel">
@@ -78,6 +83,18 @@
             <property name="valign">end</property>
           </object>
         </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel" id="InfoLabel">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="halign">center</property>
+        <property name="valign">end</property>
+        <property name="margin-top">32</property>
+        <property name="margin-bottom">32</property>
+        <property name="vexpand">True</property>
+        <property name="label" translatable="yes">Auto Activities・v0</property>
       </object>
     </child>
   </object>
