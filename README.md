@@ -9,8 +9,11 @@ Show activities overlay when there are no windows.
 
 ## Installation
 This extension is available on **GNOME 40** or newer versions. <br/>
-Note that this extension is still in development and a bit resource hungry.<br/>
-This extension is still being reviewed for GNOME Extensions webpage.
+Note that this extension is still in development and a bit resource hungry.
+
+### GNOME Extensions
+
+You can install the extension [here](https://extensions.gnome.org/extension/4179/auto-activities) from GNOME Extensions website.
 
 ### From Source
 
