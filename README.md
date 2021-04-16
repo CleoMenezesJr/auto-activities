@@ -8,8 +8,7 @@ Show activities overlay when there are no windows.
 [![Screenshot][screenshot-img]][extension-link]
 
 ## Installation
-This extension is available on **GNOME 40** or newer versions. <br/>
-Note that this extension is still in development and a bit resource hungry.
+This extension is available on **GNOME 40** or newer versions.
 
 ### GNOME Extensions
 

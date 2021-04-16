@@ -24,14 +24,14 @@ const { AutoActivities } = Me.imports.autoActivities;
 var autoActivities;
 
 function init() {
-  autoActivities = new AutoActivities();
-  return autoActivities;
+  ExtensionUtils.initTranslations('auto-activities');
 }
 
 function enable() {
-  autoActivities.enable();
+  autoActivities = new AutoActivities();
 }
 
 function disable() {
   autoActivities.destroy();
+  autoActivities = null;
 }

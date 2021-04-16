@@ -25,53 +25,69 @@ const Me = ExtensionUtils.getCurrentExtension();
 var AutoActivities = GObject.registerClass(
   class AutoActivities extends St.Bin {
     _init(remoteModel, monitorIndex) {
-      this._workspacesReorderedEvent = null;
-      this._workspacesUpdatedEvent = null;
-      this._windowRemovedEvent = null;
-      this.remoteModel = remoteModel;
-      this.monitorIndex = monitorIndex;
-      this.settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.auto-activities');
+      this._remoteModel = remoteModel;
+      this._monitorIndex = monitorIndex;
+      this._windowRemovedEvents = [];
+      this._settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.auto-activities');
+    
+      for (let i = 0; i < global.workspace_manager.n_workspaces; i++)
+        this._onWorkspaceAdded(global.workspace_manager, i);
+
+      this._workspaceAddedEvent = global.workspace_manager.connect('workspace-added', this._onWorkspaceAdded.bind(this));
+      this._workspaceRemovedEvent = global.workspace_manager.connect('workspace-removed', this._onWorkspaceRemoved.bind(this));
+      this._workspacesReorderedEvent = global.workspace_manager.connect('workspaces-reordered', this._onWorkspacesReordered.bind(this));
     }
   
-    enable() {
-      for (let i = 0; i < global.workspace_manager.n_workspaces; i++) {
-        try { global.workspace_manager.get_workspace_by_index(i).connect('window-removed', this._windowRemoved.bind(this)); }
-        catch (_err) {}
-      }
-      this._workspacesReorderedEvent = global.workspace_manager.connect('workspaces-reordered', this._workspacesUpdated.bind(this));
-      this._workspacesUpdatedEvent = global.workspace_manager.connect('notify::n-workspaces', this._workspacesUpdated.bind(this));
-    }
-  
-    _workspacesUpdated(_workspaceManager) {
-      for (let i = 0; i < global.workspace_manager.n_workspaces; i++) {
-        try { global.workspace_manager.get_workspace_by_index(i).disconnect(this._windowRemovedEvent); }
-        catch (_err) {}
-      }
-      for (let i = 0; i < global.workspace_manager.n_workspaces; i++) {
-        try { global.workspace_manager.get_workspace_by_index(i).connect('window-removed', this._windowRemoved.bind(this)); }
-        catch (_err) {}
-      }
+    _onWorkspaceAdded(_workspaceManager, workspaceIndex) {
+      let event = global.workspace_manager.get_workspace_by_index(workspaceIndex).connect('window-removed', this._onWindowRemoved.bind(this)); 
+      this._windowRemovedEvents.push(event);
     }
 
-    _windowRemoved(_workspace, removedWindow) {
+    _onWorkspaceRemoved(_workspaceManager, workspaceIndex) {
+      if (workspaceIndex < this._windowRemovedEvents.length)
+        this._windowRemovedEvents.splice(workspaceIndex);
+    }
+
+    _onWorkspacesReordered(_workspaceManager) {
+      let firstWorkspaceIndex = -1;
+      let secondWorkspaceIndex = -1;
+      for (let i = 0; i < this._windowRemovedEvents.length; i++)
+        if (GObject.signal_handler_is_connected(global.workspace_manager.get_workspace_by_index(i), this._windowRemovedEvents[i])) {
+          if (firstWorkspaceIndex < 0)
+            firstWorkspaceIndex = i;
+          else
+            secondWorkspaceIndex = i;
+        }
+
+      let tempFirstWorkspaceIndex = this._windowRemovedEvents[firstWorkspaceIndex];
+      this._windowRemovedEvents[firstWorkspaceIndex] = this._windowRemovedEvents[secondWorkspaceIndex];
+      this._windowRemovedEvents[secondWorkspaceIndex] = tempFirstWorkspaceIndex;
+    }
+
+    _onWindowRemoved(_workspace, removedWindow) {
       let ignoredWindowTypes = [ Meta.WindowType.DROPDOWN_MENU, Meta.WindowType.NOTIFICATION, Meta.WindowType.POPUP_MENU ];
-      if (ignoredWindowTypes.includes(removedWindow.get_window_type())) return;
+      if (ignoredWindowTypes.includes(removedWindow.get_window_type()))
+        return;
 
       let windows = global.get_window_actors();
-      if (this.settings.get_boolean('isolate-workspaces')) windows = windows.filter(window => window.meta_window.get_workspace().index() === global.workspace_manager.get_active_workspace().index());
-      if (this.settings.get_boolean('isolate-monitors')) windows = windows.filter(window => window.meta_window.get_monitor() === this.monitorIndex);
-      if (this.settings.get_boolean('skip-taskbar')) windows = windows.filter(window => !window.meta_window.skip_taskbar);
+      if (this._settings.get_boolean('isolate-workspaces'))
+        windows = windows.filter(window => window.meta_window.get_workspace().index() === global.workspace_manager.get_active_workspace().index());
+      if (this._settings.get_boolean('isolate-monitors'))
+        windows = windows.filter(window => window.meta_window.get_monitor() === this._monitorIndex);
+      if (this._settings.get_boolean('skip-taskbar'))
+        windows = windows.filter(window => !window.meta_window.skip_taskbar);
 
-      if (windows.length < 1) Main.overview.show();
+      if (windows.length < 1)
+        Main.overview.show();
     }
   
     destroy() {
+      global.workspace_manager.disconnect(this._workspaceAddedEvent);
+      global.workspace_manager.disconnect(this._workspaceRemovedEvent);
       global.workspace_manager.disconnect(this._workspacesReorderedEvent);
-      global.workspace_manager.disconnect(this._workspacesUpdatedEvent);
-  
-      for (let i = 0; i < global.workspace_manager.n_workspaces; i++) {
-        try { global.workspace_manager.get_workspace_by_index(i).disconnect(this._windowRemovedEvent); }
-        catch (_err) {}
-      }
+
+      for (let i = 0; i < this._windowRemovedEvents.length; i++)
+        if (GObject.signal_handler_is_connected(global.workspace_manager.get_workspace_by_index(i), this._windowRemovedEvents[i]))
+          global.workspace_manager.get_workspace_by_index(i).disconnect(this._windowRemovedEvents[i]);
     }
   });
