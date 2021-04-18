@@ -18,6 +18,7 @@
 'use strict';
 
 const Main = imports.ui.main;
+const Mainloop = imports.mainloop;
 const { GObject, St, Meta } = imports.gi;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
@@ -69,16 +70,23 @@ var AutoActivities = GObject.registerClass(
       if (ignoredWindowTypes.includes(removedWindow.get_window_type()))
         return;
 
-      let windows = global.get_window_actors();
-      if (this._settings.get_boolean('isolate-workspaces'))
-        windows = windows.filter(window => window.meta_window.get_workspace().index() === global.workspace_manager.get_active_workspace().index());
-      if (this._settings.get_boolean('isolate-monitors'))
-        windows = windows.filter(window => window.meta_window.get_monitor() === this._monitorIndex);
-      if (this._settings.get_boolean('skip-taskbar'))
-        windows = windows.filter(window => !window.meta_window.skip_taskbar);
+      let delay = 0;
+      let delaySetting = parseInt(this._settings.get_string('window-checking-delay'));
+      if (!isNaN(delaySetting) && delaySetting > 0)
+          delay = delaySetting;
 
-      if (windows.length < 1)
-        Main.overview.show();
+      Mainloop.timeout_add(delay, () => {
+        let windows = global.get_window_actors();
+        if (this._settings.get_boolean('isolate-workspaces'))
+          windows = windows.filter(window => window.meta_window.get_workspace().index() === global.workspace_manager.get_active_workspace().index());
+        if (this._settings.get_boolean('isolate-monitors'))
+          windows = windows.filter(window => window.meta_window.get_monitor() === this._monitorIndex);
+        if (this._settings.get_boolean('skip-taskbar'))
+          windows = windows.filter(window => !window.meta_window.skip_taskbar);
+
+        if (windows.length < 1)
+          Main.overview.show();
+      });
     }
   
     destroy() {

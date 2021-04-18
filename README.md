@@ -1,5 +1,5 @@
 # Auto Activities
-Show activities overlay when there are no windows.
+Show activities overview when there are no windows on GNOME.
 
 [![License][license-badge]][license-link]
 [![Latest Release][release-badge]][release-link]

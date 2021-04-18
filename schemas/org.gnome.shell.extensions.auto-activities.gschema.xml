@@ -10,5 +10,8 @@
     <key name="skip-taskbar" type="b">
       <default>true</default>
     </key>
+    <key name="window-checking-delay" type="s">
+      <default>"100"</default>
+    </key>
   </schema>
 </schemalist>

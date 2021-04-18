@@ -54,6 +54,10 @@ function buildPrefsWidget() {
   skipTaskbar.set_active(settings.get_boolean('skip-taskbar'));
   settings.bind('skip-taskbar', skipTaskbar, 'active', Gio.SettingsBindFlags.DEFAULT);
 
+  let checkingDelay = builder.get_object('CheckingDelayEntry');
+  checkingDelay.set_text(settings.get_string('window-checking-delay'));
+  settings.bind('window-checking-delay', checkingDelay, 'text', Gio.SettingsBindFlags.DEFAULT);
+
   let infoLabel = builder.get_object('InfoLabel');
   infoLabel.set_label(`Auto Activities・v${Me.metadata.version}`);
 
