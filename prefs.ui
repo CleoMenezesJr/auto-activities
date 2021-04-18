@@ -3,7 +3,7 @@
 <interface domain="auto-activities">
   <requires lib="gtk+" version="3.14"/>
   <object class="GtkBox" id="MainWidget">
-    <property name="can-focus">False</property>
+    <property name="can-focus">True</property>
     <property name="halign">center</property>
     <property name="margin-start">8</property>
     <property name="margin-end">8</property>
@@ -81,6 +81,37 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="valign">end</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <!-- n-columns=2 n-rows=1 -->
+      <object class="GtkGrid" id="OverviewDelayGrid">
+        <property name="visible">True</property>
+        <property name="can-focus">True</property>
+        <property name="halign">end</property>
+        <property name="margin-bottom">8</property>
+        <child>
+          <object class="GtkLabel" id="OverviewDelayLabel">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-end">16</property>
+            <property name="label" translatable="yes">Overview Delay (ms)</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkEntry" id="OverviewDelayEntry">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="editable">True</property>
+            <property name="max-length">5</property>
+            <property name="width-chars">5</property>
+            <property name="max-width-chars">5</property>
+            <property name="text" translatable="yes">0</property>
+            <property name="xalign">0.5</property>
+            <property name="placeholder-text" translatable="yes">Delay</property>
+            <property name="input-purpose">digits</property>
           </object>
         </child>
       </object>
