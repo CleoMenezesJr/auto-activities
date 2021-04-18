@@ -87,21 +87,21 @@
     </child>
     <child>
       <!-- n-columns=2 n-rows=1 -->
-      <object class="GtkGrid" id="OverviewDelayGrid">
+      <object class="GtkGrid" id="CheckingDelayGrid">
         <property name="visible">True</property>
         <property name="can-focus">True</property>
         <property name="halign">end</property>
         <property name="margin-bottom">8</property>
         <child>
-          <object class="GtkLabel" id="OverviewDelayLabel">
+          <object class="GtkLabel" id="CheckingDelayLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="margin-end">16</property>
-            <property name="label" translatable="yes">Overview Delay (ms)</property>
+            <property name="label" translatable="yes">Window Checking Delay (ms)</property>
           </object>
         </child>
         <child>
-          <object class="GtkEntry" id="OverviewDelayEntry">
+          <object class="GtkEntry" id="CheckingDelayEntry">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="editable">True</property>
