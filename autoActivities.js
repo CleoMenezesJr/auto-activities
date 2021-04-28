@@ -22,6 +22,7 @@ const Mainloop = imports.mainloop;
 const { GObject, St, Meta } = imports.gi;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
+const ignoredWindowTypes = [ Meta.WindowType.DROPDOWN_MENU, Meta.WindowType.NOTIFICATION, Meta.WindowType.POPUP_MENU, Meta.WindowType.SPLASHSCREEN ];
 
 var AutoActivities = GObject.registerClass(
   class AutoActivities extends St.Bin {
@@ -40,17 +41,17 @@ var AutoActivities = GObject.registerClass(
       this._minimizedEvent = global.window_manager.connect('minimize', this._onWindowMinimized.bind(this));
     }
   
-    _onWorkspaceAdded(_workspaceManager, workspaceIndex) {
+    _onWorkspaceAdded(_sender, workspaceIndex) {
       let windowRemovedEvent = global.workspace_manager.get_workspace_by_index(workspaceIndex).connect('window-removed', this._onWindowRemoved.bind(this)); 
       this._windowRemovedEvents.push(windowRemovedEvent);
     }
 
-    _onWorkspaceRemoved(_workspaceManager, workspaceIndex) {
+    _onWorkspaceRemoved(_sender, workspaceIndex) {
       if (workspaceIndex < this._windowRemovedEvents.length)
         this._windowRemovedEvents.splice(workspaceIndex);
     }
 
-    _onWorkspacesReordered(_workspaceManager) {
+    _onWorkspacesReordered(_sender) {
       let firstWorkspaceIndex = -1;
       let secondWorkspaceIndex = -1;
       for (let i = 0; i < this._windowRemovedEvents.length; i++)
@@ -66,19 +67,18 @@ var AutoActivities = GObject.registerClass(
       this._windowRemovedEvents[secondWorkspaceIndex] = tempFirstWorkspaceRemovedEvent;
     }
 
-    _onWindowMinimized(_sender, actor) {
-      this._onWindowRemoved(_sender, actor.meta_window);
+    _onWindowMinimized(sender, actor) {
+      this._onWindowRemoved(sender, actor.meta_window);
     }
 
     _onWindowRemoved(_sender, removedWindow) {
-      let ignoredWindowTypes = [ Meta.WindowType.DROPDOWN_MENU, Meta.WindowType.NOTIFICATION, Meta.WindowType.POPUP_MENU, Meta.WindowType.SPLASHSCREEN ];
       if (ignoredWindowTypes.includes(removedWindow.get_window_type()))
         return;
 
       let delay = 0;
       let delaySetting = parseInt(this._settings.get_string('window-checking-delay'));
       if (!isNaN(delaySetting) && delaySetting > 0)
-          delay = delaySetting;
+        delay = delaySetting;
 
       Mainloop.timeout_add(delay, () => {
         let windows = global.get_window_actors();
