@@ -87,6 +87,30 @@
     </child>
     <child>
       <!-- n-columns=2 n-rows=1 -->
+      <object class="GtkGrid" id="MinimizedGrid">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="halign">end</property>
+        <property name="margin-bottom">8</property>
+        <child>
+          <object class="GtkLabel" id="MinimizedLabel">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-end">16</property>
+            <property name="label" translatable="yes">Detect When Minimized</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="MinimizedSwitch">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="valign">end</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <!-- n-columns=2 n-rows=1 -->
       <object class="GtkGrid" id="CheckingDelayGrid">
         <property name="visible">True</property>
         <property name="can-focus">True</property>
@@ -104,7 +128,6 @@
           <object class="GtkEntry" id="CheckingDelayEntry">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
-            <property name="editable">True</property>
             <property name="max-length">5</property>
             <property name="width-chars">5</property>
             <property name="max-width-chars">5</property>
