@@ -22,6 +22,10 @@ install: build
 	mkdir -p $(INSTALLBASE)/$(INSTALLNAME)
 	cp -r ./ $(INSTALLBASE)/$(INSTALLNAME)
 
+.PHONY: uninstall
+uninstall:
+	rm -rf $(INSTALLBASE)/$(INSTALLNAME)
+
 .PHONY: clean
 clean:
 	rm -f ./schemas/gschemas.compiled
