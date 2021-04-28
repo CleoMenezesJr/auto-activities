@@ -97,7 +97,7 @@
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="margin-end">16</property>
-            <property name="label" translatable="yes">Detect When Minimized</property>
+            <property name="label" translatable="yes">Detect Minimized Windows</property>
           </object>
         </child>
         <child>
