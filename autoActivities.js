@@ -37,6 +37,7 @@ var AutoActivities = GObject.registerClass(
 
       this._workspaceAddedEvent = global.workspace_manager.connect('workspace-added', this._onWorkspaceAdded.bind(this));
       this._workspaceRemovedEvent = global.workspace_manager.connect('workspace-removed', this._onWorkspaceRemoved.bind(this));
+      this._workspaceSwitchedEvent = global.workspace_manager.connect('workspace-switched', this._onWorkspaceSwitched.bind(this));
       this._workspacesReorderedEvent = global.workspace_manager.connect('workspaces-reordered', this._onWorkspacesReordered.bind(this));
       this._minimizedEvent = global.window_manager.connect('minimize', this._onWindowMinimized.bind(this));
     }
@@ -51,30 +52,39 @@ var AutoActivities = GObject.registerClass(
         this._windowRemovedEvents.splice(workspaceIndex);
     }
 
+    _onWorkspaceSwitched(_sender, _oldWorkspaceIndex, _newWorkspaceIndex, _direction) {
+      if (this._settings.get_boolean('isolate-workspaces'))
+        this._checkAndShowOverview();
+    }
+
     _onWorkspacesReordered(_sender) {
       let firstWorkspaceIndex = -1;
       let secondWorkspaceIndex = -1;
-      for (let i = 0; i < this._windowRemovedEvents.length; i++)
+      for (let i = 0; i < this._windowRemovedEvents.length; i++) {
         if (GObject.signal_handler_is_connected(global.workspace_manager.get_workspace_by_index(i), this._windowRemovedEvents[i])) {
           if (firstWorkspaceIndex < 0)
             firstWorkspaceIndex = i;
           else
             secondWorkspaceIndex = i;
         }
+      }
 
       let tempFirstWorkspaceRemovedEvent = this._windowRemovedEvents[firstWorkspaceIndex];
       this._windowRemovedEvents[firstWorkspaceIndex] = this._windowRemovedEvents[secondWorkspaceIndex];
       this._windowRemovedEvents[secondWorkspaceIndex] = tempFirstWorkspaceRemovedEvent;
     }
 
-    _onWindowMinimized(sender, actor) {
-      this._onWindowRemoved(sender, actor.meta_window);
+    _onWindowMinimized(_sender, actor) {
+      if (this._settings.get_boolean('detect-minimized') && !ignoredWindowTypes.includes(actor.meta_window.get_window_type()))
+        this._checkAndShowOverview();
     }
 
     _onWindowRemoved(_sender, removedWindow) {
-      if (ignoredWindowTypes.includes(removedWindow.get_window_type()))
-        return;
+      if (!ignoredWindowTypes.includes(removedWindow.get_window_type()))
+        this._checkAndShowOverview();
+    }
 
+    _checkAndShowOverview() {
       let delay = 0;
       let delaySetting = parseInt(this._settings.get_string('window-checking-delay'));
       if (!isNaN(delaySetting) && delaySetting > 0)
@@ -99,11 +109,13 @@ var AutoActivities = GObject.registerClass(
     destroy() {
       global.workspace_manager.disconnect(this._workspaceAddedEvent);
       global.workspace_manager.disconnect(this._workspaceRemovedEvent);
+      global.workspace_manager.disconnect(this._workspaceSwitchedEvent);
       global.workspace_manager.disconnect(this._workspacesReorderedEvent);
       global.window_manager.disconnect(this._minimizedEvent);
 
-      for (let i = 0; i < this._windowRemovedEvents.length; i++)
+      for (let i = 0; i < this._windowRemovedEvents.length; i++) {
         if (GObject.signal_handler_is_connected(global.workspace_manager.get_workspace_by_index(i), this._windowRemovedEvents[i]))
           global.workspace_manager.get_workspace_by_index(i).disconnect(this._windowRemovedEvents[i]);
+      }
     }
   });
