@@ -60,13 +60,14 @@ var AutoActivities = GObject.registerClass(
     _onWorkspacesReordered(_sender) {
       let firstWorkspaceIndex = -1;
       let secondWorkspaceIndex = -1;
-      for (let i = 0; i < this._windowRemovedEvents.length; i++)
+      for (let i = 0; i < this._windowRemovedEvents.length; i++) {
         if (GObject.signal_handler_is_connected(global.workspace_manager.get_workspace_by_index(i), this._windowRemovedEvents[i])) {
           if (firstWorkspaceIndex < 0)
             firstWorkspaceIndex = i;
           else
             secondWorkspaceIndex = i;
         }
+      }
 
       let tempFirstWorkspaceRemovedEvent = this._windowRemovedEvents[firstWorkspaceIndex];
       this._windowRemovedEvents[firstWorkspaceIndex] = this._windowRemovedEvents[secondWorkspaceIndex];
@@ -112,8 +113,9 @@ var AutoActivities = GObject.registerClass(
       global.workspace_manager.disconnect(this._workspacesReorderedEvent);
       global.window_manager.disconnect(this._minimizedEvent);
 
-      for (let i = 0; i < this._windowRemovedEvents.length; i++)
+      for (let i = 0; i < this._windowRemovedEvents.length; i++) {
         if (GObject.signal_handler_is_connected(global.workspace_manager.get_workspace_by_index(i), this._windowRemovedEvents[i]))
           global.workspace_manager.get_workspace_by_index(i).disconnect(this._windowRemovedEvents[i]);
+      }
     }
   });
