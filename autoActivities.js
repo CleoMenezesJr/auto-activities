@@ -94,7 +94,7 @@ var AutoActivities = GObject.registerClass(
     }
 
     _onWindowAdded(_sender, addedWindow) {
-      if (!ignoredWindowTypes.includes(addedWindow.get_window_type()) && this._settings.get_boolean('close-on-new-window')) {
+      if (!ignoredWindowTypes.includes(addedWindow.get_window_type()) && this._settings.get_boolean('hide-on-new-window')) {
         if (Main.overview.visible)
           Main.overview.hide();
       }

@@ -111,21 +111,21 @@
     </child>
     <child>
       <!-- n-columns=2 n-rows=1 -->
-      <object class="GtkGrid" id="CloseOnNewWindowGrid">
+      <object class="GtkGrid" id="HideOnNewWindowGrid">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="halign">end</property>
         <property name="margin-bottom">8</property>
         <child>
-          <object class="GtkLabel" id="CloseOnNewWindowLabel">
+          <object class="GtkLabel" id="HideOnNewWindowLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="margin-end">16</property>
-            <property name="label" translatable="yes">Close Overview on New Window</property>
+            <property name="label" translatable="yes">Always Hide Overview on New Window</property>
           </object>
         </child>
         <child>
-          <object class="GtkSwitch" id="CloseOnNewWindowSwitch">
+          <object class="GtkSwitch" id="HideOnNewWindowSwitch">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="valign">end</property>
