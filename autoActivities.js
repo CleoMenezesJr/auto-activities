@@ -30,6 +30,7 @@ var AutoActivities = GObject.registerClass(
       this._remoteModel = remoteModel;
       this._monitorIndex = monitorIndex;
       this._windowRemovedEvents = [];
+      this._windowAddedEvents = [];
       this._settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.auto-activities');
     
       for (let i = 0; i < global.workspace_manager.n_workspaces; i++)
@@ -45,11 +46,15 @@ var AutoActivities = GObject.registerClass(
     _onWorkspaceAdded(_sender, workspaceIndex) {
       let windowRemovedEvent = global.workspace_manager.get_workspace_by_index(workspaceIndex).connect('window-removed', this._onWindowRemoved.bind(this)); 
       this._windowRemovedEvents.push(windowRemovedEvent);
+      let windowAddedEvent = global.workspace_manager.get_workspace_by_index(workspaceIndex).connect('window-added', this._onWindowAdded.bind(this));
+      this._windowAddedEvents.push(windowAddedEvent);
     }
 
     _onWorkspaceRemoved(_sender, workspaceIndex) {
-      if (workspaceIndex < this._windowRemovedEvents.length)
+      if (workspaceIndex < this._windowRemovedEvents.length) {
         this._windowRemovedEvents.splice(workspaceIndex);
+        this._windowAddedEvents.splice(workspaceIndex);
+      }
     }
 
     _onWorkspaceSwitched(_sender, _oldWorkspaceIndex, _newWorkspaceIndex, _direction) {
@@ -72,6 +77,10 @@ var AutoActivities = GObject.registerClass(
       let tempFirstWorkspaceRemovedEvent = this._windowRemovedEvents[firstWorkspaceIndex];
       this._windowRemovedEvents[firstWorkspaceIndex] = this._windowRemovedEvents[secondWorkspaceIndex];
       this._windowRemovedEvents[secondWorkspaceIndex] = tempFirstWorkspaceRemovedEvent;
+
+      let tempFirstWorkspaceAddedEvent = this._windowAddedEvents[firstWorkspaceIndex];
+      this._windowAddedEvents[firstWorkspaceIndex] = this._windowAddedEvents[secondWorkspaceIndex];
+      this._windowAddedEvents[secondWorkspaceIndex] = tempFirstWorkspaceAddedEvent;
     }
 
     _onWindowMinimized(_sender, actor) {
@@ -82,6 +91,13 @@ var AutoActivities = GObject.registerClass(
     _onWindowRemoved(_sender, removedWindow) {
       if (!ignoredWindowTypes.includes(removedWindow.get_window_type()))
         this._checkAndShowOverview();
+    }
+
+    _onWindowAdded(_sender, addedWindow) {
+      if (!ignoredWindowTypes.includes(addedWindow.get_window_type()) && this._settings.get_boolean('hide-on-new-window')) {
+        if (Main.overview.visible)
+          Main.overview.hide();
+      }
     }
 
     _checkAndShowOverview() {
@@ -116,6 +132,11 @@ var AutoActivities = GObject.registerClass(
       for (let i = 0; i < this._windowRemovedEvents.length; i++) {
         if (GObject.signal_handler_is_connected(global.workspace_manager.get_workspace_by_index(i), this._windowRemovedEvents[i]))
           global.workspace_manager.get_workspace_by_index(i).disconnect(this._windowRemovedEvents[i]);
+      }
+
+      for (let i = 0; i < this._windowAddedEvents.length; i++) {
+        if (GObject.signal_handler_is_connected(global.workspace_manager.get_workspace_by_index(i), this._windowAddedEvents[i]))
+          global.workspace_manager.get_workspace_by_index(i).disconnect(this._windowAddedEvents[i]);
       }
     }
   });

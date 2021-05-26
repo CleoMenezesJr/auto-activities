@@ -13,6 +13,9 @@
     <key name="detect-minimized" type="b">
       <default>false</default>
     </key>
+    <key name="hide-on-new-window" type="b">
+      <default>false</default>
+    </key>
     <key name="window-checking-delay" type="s">
       <default>"100"</default>
     </key>
