@@ -58,6 +58,10 @@ function buildPrefsWidget() {
   detectMinimized.set_active(settings.get_boolean('detect-minimized'));
   settings.bind('detect-minimized', detectMinimized, 'active', Gio.SettingsBindFlags.DEFAULT);
 
+  let closeOnNewWindow = builder.get_object('CloseOnNewWindowSwitch');
+  closeOnNewWindow.set_active(settings.get_boolean('close-on-new-window'));
+  settings.bind('close-on-new-window', closeOnNewWindow, 'active', Gio.SettingsBindFlags.DEFAULT);
+
   let checkingDelay = builder.get_object('CheckingDelayEntry');
   checkingDelay.set_text(settings.get_string('window-checking-delay'));
   settings.bind('window-checking-delay', checkingDelay, 'text', Gio.SettingsBindFlags.DEFAULT);
