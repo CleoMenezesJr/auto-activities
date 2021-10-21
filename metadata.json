@@ -2,9 +2,9 @@
   "name": "Auto Activities",
   "description": "Show activities overview when there are no windows, or hide it when there are new windows.",
   "uuid": "auto-activities@acedron.github.io",
-  "shell-version": [ "40" ],
+  "shell-version": [ "40", "41" ],
   "url": "https://github.com/acedron/auto-activities",
   "original-author": "acedrons@yahoo.co.jp",
-  "version": 11,
+  "version": 12,
   "gettext-domain": "auto-activities"
 }
