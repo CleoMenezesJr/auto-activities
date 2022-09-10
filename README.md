@@ -17,7 +17,7 @@ You can install the extension [here](https://extensions.gnome.org/extension/4179
 ### From Source
 
 ```bash
-$ git clone https://github.com/jan-newiko/auto-activities.git
+$ git clone https://github.com/jan-senaa/auto-activities.git
 $ cd auto-activities
 $ make install
 ```
@@ -28,11 +28,11 @@ You can enable the extension using GNOME Extensions.
 $ gnome-extensions enable auto-activities@acedron.github.io
 ```
 
-[license-badge]: https://img.shields.io/github/license/jan-newiko/auto-activities?style=for-the-badge
-[license-link]: https://github.com/jan-newiko/auto-activities/blob/master/LICENSE
-[release-badge]: https://img.shields.io/github/v/release/jan-newiko/auto-activities?style=for-the-badge
-[release-link]: https://github.com/jan-newiko/auto-activities/releases/latest
-[commit-badge]: https://img.shields.io/github/last-commit/jan-newiko/auto-activities?style=for-the-badge
-[commit-link]: https://github.com/jan-newiko/auto-activities/commit
+[license-badge]: https://img.shields.io/github/license/jan-senaa/auto-activities?style=for-the-badge
+[license-link]: https://github.com/jan-senaa/auto-activities/blob/master/LICENSE
+[release-badge]: https://img.shields.io/github/v/release/jan-senaa/auto-activities?style=for-the-badge
+[release-link]: https://github.com/jan-senaa/auto-activities/releases/latest
+[commit-badge]: https://img.shields.io/github/last-commit/jan-senaa/auto-activities?style=for-the-badge
+[commit-link]: https://github.com/jan-senaa/auto-activities/commit
 [screenshot-img]: https://extensions.gnome.org/extension-data/screenshots/screenshot_4179.gif
 [extension-link]: https://extensions.gnome.org/extension/4179/auto-activities

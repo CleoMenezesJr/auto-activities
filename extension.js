@@ -1,6 +1,6 @@
 /****************************************************************************
 ** Auto Activities - Show activities overlay when there are no windows.
-** Copyright (C) 2021  acedron <acedrons@yahoo.co.jp>
+** Copyright (C) 2021  jan Sena <mi-jan-sena@proton.me>
 **
 ** This program is free software: you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
