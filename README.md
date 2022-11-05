@@ -17,7 +17,7 @@ You can install the extension [here](https://extensions.gnome.org/extension/4179
 ### From Source
 
 ```bash
-$ git clone https://github.com/jan-senaa/auto-activities.git
+$ git clone https://github.com/CleoMenezesJr/auto-activities
 $ cd auto-activities
 $ make install
 ```
@@ -25,7 +25,7 @@ $ make install
 You can enable the extension using GNOME Extensions.
 
 ```bash
-$ gnome-extensions enable auto-activities@acedron.github.io
+$ gnome-extensions enable auto-activities@CleoMenezesJr.github.io
 ```
 
 [license-badge]: https://img.shields.io/github/license/jan-senaa/auto-activities?style=for-the-badge

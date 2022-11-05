@@ -1,4 +1,4 @@
-UUID = auto-activities@acedron.github.io
+UUID = auto-activities@CleoMenezesJr.github.io
 ifeq ($(strip $(DESTDIR)),)
 	INSTALLTYPE = local
 	INSTALLBASE = $(HOME)/.local/share/gnome-shell/extensions
@@ -7,7 +7,7 @@ else
 	SHARE_PREFIX = $(DESTDIR)/usr/share
 	INSTALLBASE = $(SHARE_PREFIX)/gnome-shell/extensions
 endif
-INSTALLNAME = auto-activities@acedron.github.io
+INSTALLNAME = auto-activities@CleoMenezesJr.github.io
 
 .PHONY: default
 default: build
