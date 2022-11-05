@@ -1,178 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.38.2 -->
 <interface domain="auto-activities">
-  <requires lib="gtk+" version="3.14"/>
-  <object class="GtkBox" id="MainWidget">
-    <property name="can-focus">True</property>
-    <property name="halign">center</property>
-    <property name="margin-start">8</property>
-    <property name="margin-end">8</property>
-    <property name="margin-top">8</property>
-    <property name="margin-bottom">8</property>
-    <property name="hexpand">True</property>
-    <property name="vexpand">True</property>
-    <property name="orientation">vertical</property>
+  <object class="AdwPreferencesGroup" id="MainWidget">
+    <property name="title" translatable="yes">Preferences</property>
     <child>
-      <!-- n-columns=2 n-rows=1 -->
-      <object class="GtkGrid" id="IsolateWorkspacesGrid">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="halign">end</property>
-        <property name="margin-top">48</property>
-        <property name="margin-bottom">8</property>
-        <child>
-          <object class="GtkLabel" id="IsolateWorkspacesLabel">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="margin-end">16</property>
-            <property name="label" translatable="yes">Isolate Workspaces</property>
-          </object>
-        </child>
+      <object class="AdwActionRow">
+        <property name="title" translatable="yes">Isolate Workspaces</property>
+        <property name="activatable-widget">IsolateWorkspacesSwitch</property>
         <child>
           <object class="GtkSwitch" id="IsolateWorkspacesSwitch">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="valign">end</property>
+            <property name="valign">center</property>
+            <property name="state">True</property>
           </object>
         </child>
       </object>
     </child>
     <child>
-      <!-- n-columns=2 n-rows=1 -->
-      <object class="GtkGrid" id="IsolateMonitorsGrid">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="halign">end</property>
-        <property name="margin-bottom">8</property>
-        <child>
-          <object class="GtkLabel" id="IsolateMonitorsLabel">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="margin-end">16</property>
-            <property name="label" translatable="yes">Isolate Monitors</property>
-          </object>
-        </child>
+      <object class="AdwActionRow">
+        <property name="title" translatable="yes">Isolate Monitors</property>
+        <property name="activatable-widget">IsolateMonitorsSwitch</property>
         <child>
           <object class="GtkSwitch" id="IsolateMonitorsSwitch">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="valign">end</property>
+            <property name="valign">center</property>
+            <property name="state">True</property>
           </object>
         </child>
       </object>
     </child>
     <child>
-      <!-- n-columns=2 n-rows=1 -->
-      <object class="GtkGrid" id="SkipTaskbarGrid">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="halign">end</property>
-        <property name="margin-bottom">8</property>
-        <child>
-          <object class="GtkLabel" id="SkipTaskbarLabel">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="margin-end">16</property>
-            <property name="label" translatable="yes">Ignore Taskbar Windows</property>
-          </object>
-        </child>
+      <object class="AdwActionRow">
+        <property name="title" translatable="yes">Ignore Taskbar Window</property>
+        <property name="activatable-widget">SkipTaskbarSwitch</property>
         <child>
           <object class="GtkSwitch" id="SkipTaskbarSwitch">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="valign">end</property>
+            <property name="valign">center</property>
+            <property name="state">True</property>
           </object>
         </child>
       </object>
     </child>
     <child>
-      <!-- n-columns=2 n-rows=1 -->
-      <object class="GtkGrid" id="MinimizedGrid">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="halign">end</property>
-        <property name="margin-bottom">8</property>
-        <child>
-          <object class="GtkLabel" id="MinimizedLabel">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="margin-end">16</property>
-            <property name="label" translatable="yes">Detect Minimized Windows</property>
-          </object>
-        </child>
+      <object class="AdwActionRow">
+        <property name="title" translatable="yes">Detect Minimized Windows</property>
+        <property name="activatable-widget">MinimizedSwitch</property>
         <child>
           <object class="GtkSwitch" id="MinimizedSwitch">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="valign">end</property>
+            <property name="valign">center</property>
+            <property name="state">True</property>
           </object>
         </child>
       </object>
     </child>
     <child>
-      <!-- n-columns=2 n-rows=1 -->
-      <object class="GtkGrid" id="HideOnNewWindowGrid">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="halign">end</property>
-        <property name="margin-bottom">8</property>
-        <child>
-          <object class="GtkLabel" id="HideOnNewWindowLabel">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="margin-end">16</property>
-            <property name="label" translatable="yes">Always Hide Overview on New Window</property>
-          </object>
-        </child>
+      <object class="AdwActionRow">
+        <property name="title" translatable="yes">Always Hide Overview on New Window</property>
+        <property name="activatable-widget">HideOnNewWindowSwitch</property>
         <child>
           <object class="GtkSwitch" id="HideOnNewWindowSwitch">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="valign">end</property>
+            <property name="valign">center</property>
+            <property name="state">True</property>
           </object>
         </child>
       </object>
     </child>
     <child>
-      <!-- n-columns=2 n-rows=1 -->
-      <object class="GtkGrid" id="CheckingDelayGrid">
-        <property name="visible">True</property>
-        <property name="can-focus">True</property>
-        <property name="halign">end</property>
-        <property name="margin-bottom">8</property>
+      <object class="AdwActionRow">
+        <property name="title" translatable="yes">Window Checking Delay</property>
+        <property name="subtitle" translatable="yes">milliseconds</property>
+        <property name="activatable-widget">CheckingDelayEntry</property>
         <child>
-          <object class="GtkLabel" id="CheckingDelayLabel">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="margin-end">16</property>
-            <property name="label" translatable="yes">Window Checking Delay (ms)</property>
+          <object class="GtkSpinButton" id="CheckingDelayEntry">
+            <property name="valign">center</property>
+            <property name="adjustment">
+              <object class="GtkAdjustment">
+                <property name="lower">0</property>
+                <property name="upper">1000</property>
+                <property name="value">0</property>
+                <property name="page-increment">1</property>
+                <property name="step-increment">1</property>
+              </object>
+            </property>
           </object>
         </child>
-        <child>
-          <object class="GtkEntry" id="CheckingDelayEntry">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="max-length">5</property>
-            <property name="width-chars">5</property>
-            <property name="max-width-chars">5</property>
-            <property name="text" translatable="yes">0</property>
-            <property name="xalign">0.5</property>
-            <property name="placeholder-text" translatable="yes">Delay</property>
-            <property name="input-purpose">digits</property>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
-      <object class="GtkLabel" id="InfoLabel">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="halign">center</property>
-        <property name="valign">end</property>
-        <property name="margin-top">32</property>
-        <property name="margin-bottom">32</property>
-        <property name="vexpand">True</property>
-        <property name="label" translatable="yes">Auto Activities・v0</property>
       </object>
     </child>
   </object>
