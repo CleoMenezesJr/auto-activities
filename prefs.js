@@ -17,15 +17,15 @@
  ****************************************************************************/
 "use strict";
 
-const { GObject, Gtk, Gio, Adw } = imports.gi;
+const { GObject, Gtk, Gio } = imports.gi;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 
-const BuilderScope = GObject.registerClass(
+const DefaultWorkspaceBuilderScope = GObject.registerClass(
   {
     Implements: [Gtk.BuilderScope],
   },
-  class BuilderScope extends GObject.Object {
+  class DefaultWorkspaceBuilderScope extends GObject.Object {
     vfunc_create_closure(builder, handlerName, flags, connectObject) {
       if (flags & Gtk.BuilderClosureFlags.SWAPPED)
         throw new Error('Unsupported template signal flag "swapped"');
@@ -41,7 +41,7 @@ function init() {}
 
 function buildPrefsWidget() {
   let builder = Gtk.Builder.new_from_file(Me.dir.get_path() + "/prefs.ui");
-  builder.set_scope(new BuilderScope());
+  builder.set_scope(new DefaultWorkspaceBuilderScope());
   builder.set_translation_domain("auto-activities");
   let settings = ExtensionUtils.getSettings(
     "org.gnome.shell.extensions.auto-activities"
