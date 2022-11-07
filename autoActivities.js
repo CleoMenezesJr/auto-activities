@@ -28,6 +28,7 @@ const ignoredWindowTypes = [
   Meta.WindowType.POPUP_MENU,
   Meta.WindowType.SPLASHSCREEN,
 ];
+let windowCheckingDelay;
 
 var AutoActivities = GObject.registerClass(
   class AutoActivities extends St.Bin {
@@ -152,7 +153,7 @@ var AutoActivities = GObject.registerClass(
       );
       if (!isNaN(delaySetting) && delaySetting > 0) delay = delaySetting;
 
-      Mainloop.timeout_add(delay, () => {
+      windowCheckingDelay = Mainloop.timeout_add(delay, () => {
         let windows = global.get_window_actors();
         if (this._settings.get_boolean("isolate-workspaces"))
           windows = windows.filter(
@@ -205,6 +206,7 @@ var AutoActivities = GObject.registerClass(
             .get_workspace_by_index(i)
             .disconnect(this._windowAddedEvents[i]);
       }
+      Mainloop.source_remove(windowCheckingDelay);
     }
   }
 );
