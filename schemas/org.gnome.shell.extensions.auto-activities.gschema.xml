@@ -19,5 +19,8 @@
     <key name="window-checking-delay" type="s">
       <default>"100"</default>
     </key>
+    <key name="show-apps" type="b">
+      <default>false</default>
+    </key>
   </schema>
 </schemalist>
