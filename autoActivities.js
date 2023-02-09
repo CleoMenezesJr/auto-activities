@@ -172,7 +172,12 @@ var AutoActivities = GObject.registerClass(
         if (this._settings.get_boolean("detect-minimized"))
           windows = windows.filter((window) => !window.meta_window.minimized);
 
-        if (windows.length < 1) Main.overview.show();
+        if (windows.length < 1) {
+		      if (this._settings.get_boolean("show-apps"))
+			      Main.overview.showApps();
+		      else
+			      Main.overview.show();
+	}
       });
     }
 

@@ -101,5 +101,15 @@ function buildPrefsWidget() {
     Gio.SettingsBindFlags.DEFAULT
   );
 
+  let showApps = builder.get_object("ShowAppsSwitch");
+  showApps.set_active(settings.get_boolean("show-apps"));
+  settings.bind(
+    "show-apps",
+    showApps,
+    "active",
+    Gio.SettingsBindFlags.DEFAULT
+  );
+
   return builder.get_object("MainWidget");
 }
+
