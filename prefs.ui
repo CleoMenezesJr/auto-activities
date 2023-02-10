@@ -64,7 +64,7 @@
     </child>
     <child>
       <object class="AdwActionRow">
-        <property name="title" translatable="yes">Show apps grid instead of window overview</property>
+        <property name="title" translatable="yes">Show App Grid Instead of Overview</property>
         <property name="activatable-widget">ShowAppsSwitch</property>
         <child>
           <object class="GtkSwitch" id="ShowAppsSwitch">
