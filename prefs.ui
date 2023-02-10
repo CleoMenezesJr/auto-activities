@@ -73,7 +73,7 @@
           </object>
         </child>
       </object>
-    </child>"
+    </child>
     <child>
       <object class="AdwActionRow">
         <property name="title" translatable="yes">Window Checking Delay</property>
