@@ -9,7 +9,7 @@
         <child>
           <object class="GtkSwitch" id="IsolateWorkspacesSwitch">
             <property name="valign">center</property>
-            <property name="state">True</property>
+            <property name="active">True</property>
           </object>
         </child>
       </object>
@@ -21,7 +21,7 @@
         <child>
           <object class="GtkSwitch" id="IsolateMonitorsSwitch">
             <property name="valign">center</property>
-            <property name="state">True</property>
+            <property name="active">True</property>
           </object>
         </child>
       </object>
@@ -33,7 +33,7 @@
         <child>
           <object class="GtkSwitch" id="SkipTaskbarSwitch">
             <property name="valign">center</property>
-            <property name="state">True</property>
+            <property name="active">True</property>
           </object>
         </child>
       </object>
@@ -45,7 +45,7 @@
         <child>
           <object class="GtkSwitch" id="MinimizedSwitch">
             <property name="valign">center</property>
-            <property name="state">True</property>
+            <property name="active">True</property>
           </object>
         </child>
       </object>
@@ -57,7 +57,7 @@
         <child>
           <object class="GtkSwitch" id="HideOnNewWindowSwitch">
             <property name="valign">center</property>
-            <property name="state">True</property>
+            <property name="active">True</property>
           </object>
         </child>
       </object>
@@ -69,7 +69,7 @@
         <child>
           <object class="GtkSwitch" id="ShowAppsSwitch">
             <property name="valign">center</property>
-            <property name="state">True</property>
+            <property name="active">True</property>
           </object>
         </child>
       </object>
