@@ -17,32 +17,16 @@
  ****************************************************************************/
 "use strict";
 
-const { GObject, Gtk, Gio } = imports.gi;
+const { Gtk, Gio } = imports.gi;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 
-const DefaultWorkspaceBuilderScope = GObject.registerClass(
-  {
-    Implements: [Gtk.BuilderScope],
-  },
-  class DefaultWorkspaceBuilderScope extends GObject.Object {
-    vfunc_create_closure(builder, handlerName, flags, connectObject) {
-      if (flags & Gtk.BuilderClosureFlags.SWAPPED)
-        throw new Error('Unsupported template signal flag "swapped"');
-      if (typeof this[handlerName] === "undefined")
-        throw new Error(`${handlerName} is undefined`);
-
-      return this[handlerName].bind(connectObject || this);
-    }
-  }
-);
-
 function init() {}
 
-function buildPrefsWidget() {
-  let builder = Gtk.Builder.new_from_file(Me.dir.get_path() + "/prefs.ui");
-  builder.set_scope(new DefaultWorkspaceBuilderScope());
-  builder.set_translation_domain("auto-activities");
+function fillPreferencesWindow(window) {
+    window.set_default_size(360, 571);
+  let builder = Gtk.Builder.new();
+  builder.add_from_file(Me.dir.get_path() + "/prefs.ui");
   let settings = ExtensionUtils.getSettings(
     "org.gnome.shell.extensions.auto-activities"
   );
@@ -114,5 +98,6 @@ function buildPrefsWidget() {
   showApps.set_active(settings.get_boolean("show-apps"));
   settings.bind("show-apps", showApps, "active", Gio.SettingsBindFlags.DEFAULT);
 
-  return builder.get_object("MainWidget");
+  let page = builder.get_object("MainWidget");
+  window.add(page);
 }
