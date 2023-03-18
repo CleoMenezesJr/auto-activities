@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Auto Activities - Show activities overlay when there are no windows.
- ** Copyright (C) 2021  jan Sena <mi-jan-sena@proton.me>
+ ** Copyright (C) 2021  jan Sena <mi-jan-sena@proton.me> and Cleo Menezes Jr.
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -90,7 +90,7 @@ var AutoActivities = GObject.registerClass(
       _newWorkspaceIndex,
       _direction
     ) {
-      if (this._settings.get_boolean("isolate-workspaces"))
+      if (!this._settings.get_boolean("skip-last-workspace"))
         this._checkAndShowOverview();
     }
 

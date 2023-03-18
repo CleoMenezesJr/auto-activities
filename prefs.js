@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Auto Activities - Show activities overlay when there are no windows.
- ** Copyright (C) 2021  jan Sena <mi-jan-sena@proton.me>
+ ** Copyright (C) 2021  jan Sena <mi-jan-sena@proton.me> and Cleo Menezes Jr.
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -70,6 +70,15 @@ function buildPrefsWidget() {
   settings.bind(
     "skip-taskbar",
     skipTaskbar,
+    "active",
+    Gio.SettingsBindFlags.DEFAULT
+  );
+
+  let skipLastWorkspace = builder.get_object("SkipLastWorkspaceSwitch");
+  skipLastWorkspace.set_active(settings.get_boolean("skip-last-workspace"));
+  settings.bind(
+    "skip-last-workspace",
+    skipLastWorkspace,
     "active",
     Gio.SettingsBindFlags.DEFAULT
   );

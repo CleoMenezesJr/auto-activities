@@ -40,6 +40,18 @@
     </child>
     <child>
       <object class="AdwActionRow">
+        <property name="title" translatable="yes">Ignore Last Workspace</property>
+        <property name="activatable-widget">SkipLastWorkspaceSwitch</property>
+        <child>
+          <object class="GtkSwitch" id="SkipLastWorkspaceSwitch">
+            <property name="valign">center</property>
+            <property name="active">True</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="AdwActionRow">
         <property name="title" translatable="yes">Detect Minimized Windows</property>
         <property name="activatable-widget">MinimizedSwitch</property>
         <child>

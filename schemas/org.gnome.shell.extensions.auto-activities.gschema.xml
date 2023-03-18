@@ -10,6 +10,9 @@
     <key name="skip-taskbar" type="b">
       <default>true</default>
     </key>
+    <key name="skip-last-workspace" type="b">
+      <default>true</default>
+    </key>
     <key name="detect-minimized" type="b">
       <default>false</default>
     </key>
