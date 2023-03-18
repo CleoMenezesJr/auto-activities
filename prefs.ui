@@ -1,108 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="auto-activities">
-  <object class="AdwPreferencesGroup" id="MainWidget">
+  <object class="AdwPreferencesPage" id="MainWidget">
     <property name="title" translatable="yes">Preferences</property>
     <child>
-      <object class="AdwActionRow">
-        <property name="title" translatable="yes">Isolate Workspaces</property>
-        <property name="activatable-widget">IsolateWorkspacesSwitch</property>
+      <object class="AdwPreferencesGroup">
+        <property name="title" translatable="yes">General</property>
         <child>
-          <object class="GtkSwitch" id="IsolateWorkspacesSwitch">
-            <property name="valign">center</property>
-            <property name="active">True</property>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
-      <object class="AdwActionRow">
-        <property name="title" translatable="yes">Isolate Monitors</property>
-        <property name="activatable-widget">IsolateMonitorsSwitch</property>
-        <child>
-          <object class="GtkSwitch" id="IsolateMonitorsSwitch">
-            <property name="valign">center</property>
-            <property name="active">True</property>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
-      <object class="AdwActionRow">
-        <property name="title" translatable="yes">Ignore Taskbar Window</property>
-        <property name="activatable-widget">SkipTaskbarSwitch</property>
-        <child>
-          <object class="GtkSwitch" id="SkipTaskbarSwitch">
-            <property name="valign">center</property>
-            <property name="active">True</property>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
-      <object class="AdwActionRow">
-        <property name="title" translatable="yes">Ignore Last Workspace</property>
-        <property name="activatable-widget">SkipLastWorkspaceSwitch</property>
-        <child>
-          <object class="GtkSwitch" id="SkipLastWorkspaceSwitch">
-            <property name="valign">center</property>
-            <property name="active">True</property>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
-      <object class="AdwActionRow">
-        <property name="title" translatable="yes">Detect Minimized Windows</property>
-        <property name="activatable-widget">MinimizedSwitch</property>
-        <child>
-          <object class="GtkSwitch" id="MinimizedSwitch">
-            <property name="valign">center</property>
-            <property name="active">True</property>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
-      <object class="AdwActionRow">
-        <property name="title" translatable="yes">Always Hide Overview on New Window</property>
-        <property name="activatable-widget">HideOnNewWindowSwitch</property>
-        <child>
-          <object class="GtkSwitch" id="HideOnNewWindowSwitch">
-            <property name="valign">center</property>
-            <property name="active">True</property>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
-      <object class="AdwActionRow">
-        <property name="title" translatable="yes">Show App Grid Instead of Overview</property>
-        <property name="activatable-widget">ShowAppsSwitch</property>
-        <child>
-          <object class="GtkSwitch" id="ShowAppsSwitch">
-            <property name="valign">center</property>
-            <property name="active">True</property>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
-      <object class="AdwActionRow">
-        <property name="title" translatable="yes">Window Checking Delay</property>
-        <property name="subtitle" translatable="yes">milliseconds</property>
-        <property name="activatable-widget">CheckingDelayEntry</property>
-        <child>
-          <object class="GtkSpinButton" id="CheckingDelayEntry">
-            <property name="valign">center</property>
-            <property name="adjustment">
-              <object class="GtkAdjustment">
-                <property name="lower">0</property>
-                <property name="upper">10000</property>
-                <property name="value">0</property>
-                <property name="page-increment">1</property>
-                <property name="step-increment">1</property>
+          <object class="AdwActionRow">
+            <property name="title" translatable="yes">Detect Minimized Windows</property>
+            <property name="activatable-widget">MinimizedSwitch</property>
+            <child>
+              <object class="GtkSwitch" id="MinimizedSwitch">
+                <property name="valign">center</property>
+                <property name="active">True</property>
               </object>
-            </property>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwActionRow">
+            <property name="title" translatable="yes">Always Hide on New Window</property>
+            <property name="activatable-widget">HideOnNewWindowSwitch</property>
+            <child>
+              <object class="GtkSwitch" id="HideOnNewWindowSwitch">
+                <property name="valign">center</property>
+                <property name="active">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwActionRow">
+            <property name="title" translatable="yes">Window Checking Delay</property>
+            <property name="subtitle" translatable="yes">milliseconds</property>
+            <property name="activatable-widget">CheckingDelayEntry</property>
+            <child>
+              <object class="GtkSpinButton" id="CheckingDelayEntry">
+                <property name="valign">center</property>
+                <property name="adjustment">
+                  <object class="GtkAdjustment">
+                    <property name="lower">0</property>
+                    <property name="upper">10000</property>
+                    <property name="value">0</property>
+                    <property name="page-increment">1</property>
+                    <property name="step-increment">1</property>
+                  </object>
+                </property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="AdwPreferencesGroup">
+        <child>
+          <object class="AdwActionRow">
+            <property name="title" translatable="yes">Show App Grid Instead of Overview</property>
+            <property name="activatable-widget">ShowAppsSwitch</property>
+            <child>
+              <object class="GtkSwitch" id="ShowAppsSwitch">
+                <property name="valign">center</property>
+                <property name="active">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="AdwPreferencesGroup">
+        <property name="title" translatable="yes">Isolate</property>
+        <child>
+          <object class="AdwActionRow">
+            <property name="title" translatable="yes">Workspaces</property>
+            <property name="activatable-widget">IsolateWorkspacesSwitch</property>
+            <child>
+              <object class="GtkSwitch" id="IsolateWorkspacesSwitch">
+                <property name="valign">center</property>
+                <property name="active">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwActionRow">
+            <property name="title" translatable="yes">Monitors</property>
+            <property name="activatable-widget">IsolateMonitorsSwitch</property>
+            <child>
+              <object class="GtkSwitch" id="IsolateMonitorsSwitch">
+                <property name="valign">center</property>
+                <property name="active">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="AdwPreferencesGroup">
+        <property name="title" translatable="yes">Ignore</property>
+        <child>
+          <object class="AdwActionRow">
+            <property name="title" translatable="yes">Taskbar Window</property>
+            <property name="activatable-widget">SkipTaskbarSwitch</property>
+            <child>
+              <object class="GtkSwitch" id="SkipTaskbarSwitch">
+                <property name="valign">center</property>
+                <property name="active">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwActionRow">
+            <property name="title" translatable="yes">Last Workspace</property>
+            <property name="activatable-widget">SkipLastWorkspaceSwitch</property>
+            <child>
+              <object class="GtkSwitch" id="SkipLastWorkspaceSwitch">
+                <property name="valign">center</property>
+                <property name="active">True</property>
+              </object>
+            </child>
           </object>
         </child>
       </object>

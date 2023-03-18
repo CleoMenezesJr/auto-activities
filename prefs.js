@@ -24,7 +24,7 @@ const Me = ExtensionUtils.getCurrentExtension();
 function init() {}
 
 function fillPreferencesWindow(window) {
-    window.set_default_size(360, 571);
+  window.set_default_size(360, 724);
   let builder = Gtk.Builder.new();
   builder.add_from_file(Me.dir.get_path() + "/prefs.ui");
   let settings = ExtensionUtils.getSettings(
