@@ -1,10 +1,19 @@
 {
-  "name": "Auto Activities",
-  "description": "Show activities overview when there are no windows, or hide it when there are new windows.\n\nThis extension is a fork of the Auto Activities extension, its former owner transferred its repository to me.",
-  "uuid": "auto-activities@CleoMenezesJr.github.io",
-  "shell-version": ["42", "43", "44"],
-  "url": "https://github.com/CleoMenezesJr/auto-activities",
-  "original-author": "mi-jan-sena@proton.me",
-  "version": 15,
-  "gettext-domain": "auto-activities"
+    "name": "Auto Activities",
+    "description": "Show activities overview when there are no windows, or hide it when there are new windows.\n\nThis extension is a fork of the Auto Activities extension, its former owner transferred its repository to me.",
+    "uuid": "auto-activities@CleoMenezesJr.github.io",
+    "shell-version": [
+        "42",
+        "43",
+        "44"
+    ],
+    "url": "https://github.com/CleoMenezesJr/auto-activities",
+    "original-author": "mi-jan-sena@proton.me",
+    "version": 15,
+    "gettext-domain": "auto-activities",
+    "donations": {
+        "github": "CleoMenezesJr",
+        "kofi": "cleomenezesjr",
+        "paypal": "CleoMenezesJr"
+    }
 }
