@@ -26,8 +26,8 @@ export default class MyExtensionPreferences extends ExtensionPreferences {
     window._settings = this.getSettings();
     window.set_default_size(360, 724);
 
-    const builder = Gtk.Builder.new();
-    builder.add_from_file("./prefs.ui");
+    const builder = new Gtk.Builder();
+    builder.add_from_file(`${this.path}/prefs.ui`);
 
     const isolateWorkspaces = builder.get_object("IsolateWorkspacesSwitch");
     isolateWorkspaces.set_active(
