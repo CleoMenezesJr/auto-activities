@@ -151,9 +151,7 @@ export const AutoActivitiesManager = GObject.registerClass(
 
     _checkAndShowOverview() {
       let delay = 0;
-      let delaySetting = parseInt(
-        this._settings.get_string("window-checking-delay"),
-      );
+      let delaySetting = this._settings.get_int("window-checking-delay");
       if (!isNaN(delaySetting) && delaySetting > 0) delay = delaySetting;
       windowCheckingDelay = GLib.timeout_add(
         GLib.PRIORITY_DEFAULT,

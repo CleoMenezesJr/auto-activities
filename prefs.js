@@ -94,13 +94,13 @@ export default class MyExtensionPreferences extends ExtensionPreferences {
     );
 
     const checkingDelay = builder.get_object("CheckingDelayEntry");
-    checkingDelay.set_text(
-      window._settings.get_string("window-checking-delay"),
+    checkingDelay.set_value(
+      window._settings.get_int("window-checking-delay"),
     );
     window._settings.bind(
       "window-checking-delay",
       checkingDelay,
-      "text",
+      "value",
       Gio.SettingsBindFlags.DEFAULT,
     );
 
