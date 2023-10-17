@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Auto Activities - Show activities overlay when there are no windows.
- ** Copyright (C) 2021  jan Sena <mi-jan-sena@proton.me>
+ ** Copyright (C) 2022-2023 Cleo Menezes Jr., 2021  jan Sena <mi-jan-sena@proton.me>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -17,21 +17,20 @@
  ****************************************************************************/
 "use strict";
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
-const { AutoActivities } = Me.imports.autoActivities;
+import { Extension } from "resource:///org/gnome/shell/extensions/extension.js";
+import { AutoActivitiesManager } from "./autoActivities.js";
 
-var autoActivities;
+export default class AutoActivities extends Extension {
+  enable() {
+    this._settings = this.getSettings();
+    this._autoActivities = new AutoActivitiesManager({
+      settings: this._settings,
+    });
+  }
 
-function init() {
-  ExtensionUtils.initTranslations("auto-activities");
-}
-
-function enable() {
-  autoActivities = new AutoActivities();
-}
-
-function disable() {
-  autoActivities.destroy();
-  autoActivities = null;
+  disable() {
+    this._autoActivities.destroy();
+    this._autoActivities = null;
+    this._settings = null;
+  }
 }

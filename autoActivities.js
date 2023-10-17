@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Auto Activities - Show activities overlay when there are no windows.
- ** Copyright (C) 2021  jan Sena <mi-jan-sena@proton.me> and Cleo Menezes Jr.
+ ** Copyright (C) 2022-2023 Cleo Menezes Jr., 2021  jan Sena <mi-jan-sena@proton.me>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -17,52 +17,52 @@
  ****************************************************************************/
 "use strict";
 
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
-const { GObject, St, Meta } = imports.gi;
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
+import * as Main from "resource:///org/gnome/shell/ui/main.js";
+import GLib from "gi://GLib";
+import GObject from "gi://GObject";
+import St from "gi://St";
+import Meta from "gi://Meta";
+
+let windowCheckingDelay;
 const ignoredWindowTypes = [
   Meta.WindowType.DROPDOWN_MENU,
   Meta.WindowType.NOTIFICATION,
   Meta.WindowType.POPUP_MENU,
   Meta.WindowType.SPLASHSCREEN,
 ];
-let windowCheckingDelay;
 
-var AutoActivities = GObject.registerClass(
-  class AutoActivities extends St.Bin {
-    _init(remoteModel, monitorIndex) {
+export const AutoActivitiesManager = GObject.registerClass(
+  class ActivitiesManager extends St.Bin {
+    _init({ remoteModel, monitorIndex, settings }) {
       this._remoteModel = remoteModel;
       this._monitorIndex = monitorIndex;
       this._windowRemovedEvents = [];
       this._windowAddedEvents = [];
-      this._settings = ExtensionUtils.getSettings(
-        "org.gnome.shell.extensions.auto-activities"
-      );
+      this._settings = settings;
 
-      for (let i = 0; i < global.workspace_manager.n_workspaces; i++)
+      for (let i = 0; i < global.workspace_manager.n_workspaces; i++) {
         this._onWorkspaceAdded(global.workspace_manager, i);
+      }
 
       this._workspaceAddedEvent = global.workspace_manager.connect(
         "workspace-added",
-        this._onWorkspaceAdded.bind(this)
+        this._onWorkspaceAdded.bind(this),
       );
       this._workspaceRemovedEvent = global.workspace_manager.connect(
         "workspace-removed",
-        this._onWorkspaceRemoved.bind(this)
+        this._onWorkspaceRemoved.bind(this),
       );
       this._workspaceSwitchedEvent = global.workspace_manager.connect(
         "workspace-switched",
-        this._onWorkspaceSwitched.bind(this)
+        this._onWorkspaceSwitched.bind(this),
       );
       this._workspacesReorderedEvent = global.workspace_manager.connect(
         "workspaces-reordered",
-        this._onWorkspacesReordered.bind(this)
+        this._onWorkspacesReordered.bind(this),
       );
       this._minimizedEvent = global.window_manager.connect(
         "minimize",
-        this._onWindowMinimized.bind(this)
+        this._onWindowMinimized.bind(this),
       );
     }
 
@@ -88,10 +88,11 @@ var AutoActivities = GObject.registerClass(
       _sender,
       _oldWorkspaceIndex,
       _newWorkspaceIndex,
-      _direction
+      _direction,
     ) {
-      if (!this._settings.get_boolean("skip-last-workspace"))
+      if (!this._settings.get_boolean("skip-last-workspace")) {
         this._checkAndShowOverview();
+      }
     }
 
     _onWorkspacesReordered(_sender) {
@@ -101,7 +102,7 @@ var AutoActivities = GObject.registerClass(
         if (
           GObject.signal_handler_is_connected(
             global.workspace_manager.get_workspace_by_index(i),
-            this._windowRemovedEvents[i]
+            this._windowRemovedEvents[i],
           )
         ) {
           if (firstWorkspaceIndex < 0) firstWorkspaceIndex = i;
@@ -128,13 +129,15 @@ var AutoActivities = GObject.registerClass(
       if (
         this._settings.get_boolean("detect-minimized") &&
         !ignoredWindowTypes.includes(actor.meta_window.get_window_type())
-      )
+      ) {
         this._checkAndShowOverview();
+      }
     }
 
     _onWindowRemoved(_sender, removedWindow) {
-      if (!ignoredWindowTypes.includes(removedWindow.get_window_type()))
+      if (!ignoredWindowTypes.includes(removedWindow.get_window_type())) {
         this._checkAndShowOverview();
+      }
     }
 
     _onWindowAdded(_sender, addedWindow) {
@@ -148,35 +151,43 @@ var AutoActivities = GObject.registerClass(
 
     _checkAndShowOverview() {
       let delay = 0;
-      let delaySetting = parseInt(
-        this._settings.get_string("window-checking-delay")
-      );
+      let delaySetting = this._settings.get_int("window-checking-delay");
       if (!isNaN(delaySetting) && delaySetting > 0) delay = delaySetting;
+      windowCheckingDelay = GLib.timeout_add(
+        GLib.PRIORITY_DEFAULT,
+        delay,
+        () => {
+          let windows = global.get_window_actors();
+          if (this._settings.get_boolean("isolate-workspaces")) {
+            windows = windows.filter(
+              (window) =>
+                window.meta_window.get_workspace().index() ===
+                  global.workspace_manager.get_active_workspace().index(),
+            );
+          }
+          if (this._settings.get_boolean("isolate-monitors")) {
+            windows = windows.filter(
+              (window) =>
+                window.meta_window.get_monitor() === this._monitorIndex,
+            );
+          }
+          if (this._settings.get_boolean("skip-taskbar")) {
+            windows = windows.filter(
+              (window) => !window.meta_window.skip_taskbar,
+            );
+          }
+          if (this._settings.get_boolean("detect-minimized")) {
+            windows = windows.filter((window) => !window.meta_window.minimized);
+          }
 
-      windowCheckingDelay = Mainloop.timeout_add(delay, () => {
-        let windows = global.get_window_actors();
-        if (this._settings.get_boolean("isolate-workspaces"))
-          windows = windows.filter(
-            (window) =>
-              window.meta_window.get_workspace().index() ===
-              global.workspace_manager.get_active_workspace().index()
-          );
-        if (this._settings.get_boolean("isolate-monitors"))
-          windows = windows.filter(
-            (window) => window.meta_window.get_monitor() === this._monitorIndex
-          );
-        if (this._settings.get_boolean("skip-taskbar"))
-          windows = windows.filter(
-            (window) => !window.meta_window.skip_taskbar
-          );
-        if (this._settings.get_boolean("detect-minimized"))
-          windows = windows.filter((window) => !window.meta_window.minimized);
-
-        if (windows.length < 1) {
-          if (this._settings.get_boolean("show-apps")) Main.overview.showApps();
-          else Main.overview.show();
-        }
-      });
+          if (windows.length < 1) {
+            if (this._settings.get_boolean("show-apps")) {
+              Main.overview
+                .showApps();
+            } else Main.overview.show();
+          }
+        },
+      );
     }
 
     destroy() {
@@ -190,26 +201,28 @@ var AutoActivities = GObject.registerClass(
         if (
           GObject.signal_handler_is_connected(
             global.workspace_manager.get_workspace_by_index(i),
-            this._windowRemovedEvents[i]
+            this._windowRemovedEvents[i],
           )
-        )
+        ) {
           global.workspace_manager
             .get_workspace_by_index(i)
             .disconnect(this._windowRemovedEvents[i]);
+        }
       }
 
       for (let i = 0; i < this._windowAddedEvents.length; i++) {
         if (
           GObject.signal_handler_is_connected(
             global.workspace_manager.get_workspace_by_index(i),
-            this._windowAddedEvents[i]
+            this._windowAddedEvents[i],
           )
-        )
+        ) {
           global.workspace_manager
             .get_workspace_by_index(i)
             .disconnect(this._windowAddedEvents[i]);
+        }
       }
-      Mainloop.source_remove(windowCheckingDelay);
+      GLib.Source.remove(windowCheckingDelay);
     }
-  }
+  },
 );
